@@ -7,10 +7,12 @@ const { Pool } = require("pg");
 app.use(cors({ origin: "*" }));
 app.use(express.json()); // This allows parsing of JSON body
 
+//specifying the connectionString for postgreSQL DB
 const pool = new Pool({
   connectionString: DB_URL,
 });
 
+//try DB connection
 pool
   .connect()
   .then((client) => {
@@ -18,6 +20,8 @@ pool
     client.release();
   })
   .catch((err) => console.error("Database connection error:", err));
+
+
 
 // POST: Create a new booking
 app.post("/newbooking", async (req, res) => {
