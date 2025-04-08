@@ -37,7 +37,7 @@
 
 //     const query = `
 //       INSERT INTO bookings (car_id, user_id, start_date, end_date, total_price, name, contact)
-//       VALUES ($1, $2, $3, $4, $5, $6, $7) 
+//       VALUES ($1, $2, $3, $4, $5, $6, $7)
 //       RETURNING id, car_id, user_id, start_date, end_date, total_price, name, contact
 //     `;
 //     const params = [
@@ -72,11 +72,11 @@
 //   try {
 //     const userId = req.params.user_id;
 //     const query = `
-//       SELECT 
-//         b.*, 
-//         c.make, 
-//         c.model, 
-//         c.year, 
+//       SELECT
+//         b.*,
+//         c.make,
+//         c.model,
+//         c.year,
 //         c.price_per_day
 //       FROM bookings AS b
 //       JOIN cars AS c ON b.car_id = c.id
@@ -135,7 +135,7 @@
 
 //     // Update the booking
 //     const query = `
-//       UPDATE bookings 
+//       UPDATE bookings
 //       SET start_date = $1, end_date = $2, name = $3, contact = $4, total_price = $5
 //       WHERE id = $6
 //       RETURNING id, start_date, end_date, name, contact, total_price
@@ -202,19 +202,18 @@
 //   console.log("App is listening on port 3000");
 // });
 
-
-const express = require("express")
-const cors = require ("cors")
-const app = express()
+const express = require("express");
+const cors = require("cors");
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors())
-app.use(express.json)
+app.use(cors());
+app.use(express.json());
 
-app.get("/", (req,res) => {
-  res.send("Express API is running")
-})
+app.get("/", (req, res) => {
+  res.send("Express API is running");
+});
 
 app.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`)
-})
+  console.log(`Server is running on ${PORT}`);
+});
