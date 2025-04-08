@@ -21,8 +21,6 @@ pool
   })
   .catch((err) => console.error("Database connection error:", err));
 
-
-
 // POST: Create a new booking
 app.post("/newbooking", async (req, res) => {
   const client = await pool.connect();
@@ -141,7 +139,7 @@ app.put("/booking/:id", async (req, res) => {
   const client = await pool.connect();
   try {
     const bookingId = req.params.id;
-    const { start_date, end_date, name, contact, total_price } = req.body;
+    const { start_date, end_date, name, contact } = req.body;
 
     // Check if the booking exists
     const checkQuery = "SELECT * FROM bookings WHERE id = $1";
@@ -153,19 +151,12 @@ app.put("/booking/:id", async (req, res) => {
 
     // Update the booking
     const query = `
-      UPDATE bookings
-      SET start_date = $1, end_date = $2, name = $3, contact = $4, total_price = $5
-      WHERE id = $6
-      RETURNING id, start_date, end_date, name, contact, total_price
-    `;
-    const params = [
-      start_date,
-      end_date,
-      name,
-      contact,
-      total_price,
-      bookingId,
-    ];
+    UPDATE bookings
+    SET start_date = $1, end_date = $2, name = $3, contact = $4
+    WHERE id = $5
+    RETURNING id, start_date, end_date, name, contact
+  `;
+    const params = [start_date, end_date, name, contact, bookingId];
 
     const result = await client.query(query, params);
 
