@@ -1,7 +1,23 @@
+// const express = require("express");
+// const cors = require("cors");
+// const app = express();
+// const PORT = process.env.PORT || 3000;
+
+// app.use(cors());
+// app.use(express.json());
+
+// app.get("/", (req, res) => {
+//   res.send("Express API is running");
+// });
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running on ${PORT}`);
+// });
+
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
 const app = express();
+const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json()); // This allows parsing of JSON body
 
@@ -197,23 +213,6 @@ app.get("/", (req, res) => {
   res.send("Express API is now running");
 });
 
-// Start the server
-app.listen(3000, () => {
-  console.log("App is listening on port 3000");
+app.listen(PORT, () => {
+  console.log(`Server is running on ${PORT}`);
 });
-
-// const express = require("express");
-// const cors = require("cors");
-// const app = express();
-// const PORT = process.env.PORT || 3000;
-
-// app.use(cors());
-// app.use(express.json());
-
-// app.get("/", (req, res) => {
-//   res.send("Express API is running");
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`Server is running on ${PORT}`);
-// });
