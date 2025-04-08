@@ -18,6 +18,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3000;
+const DB_URL = process.env.DB_URL;
 app.use(cors());
 app.use(express.json()); // This allows parsing of JSON body
 
