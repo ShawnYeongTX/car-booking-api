@@ -1,23 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-
-let app = express();
+const app = express();
 app.use(cors());
 app.use(express.json()); // This allows parsing of JSON body
-
-// Check if Postgres is connected and running correctly
-async function getPostgresVersion() {
-  const client = await pool.connect();
-  try {
-    const res = await client.query("SELECT version()");
-    console.log(res.rows[0]);
-  } finally {
-    client.release();
-  }
-}
-
-getPostgresVersion();
 
 // POST: Create a new booking
 app.post("/newbooking", async (req, res) => {
@@ -210,7 +196,6 @@ app.delete("/booking/:id", async (req, res) => {
 app.get("/", (req, res) => {
   res.send("Express API is now running");
 });
-
 
 // Start the server
 app.listen(3000, () => {
