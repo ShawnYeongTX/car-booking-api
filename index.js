@@ -3,18 +3,10 @@ const path = require("path");
 const cors = require("cors");
 const { Pool } = require("pg");
 require("dotenv").config();
-const { DATABASE_URL } = process.env;
 
 let app = express();
 app.use(cors());
 app.use(express.json()); // This allows parsing of JSON body
-
-const pool = new Pool({
-  connectionString: DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
 
 // Check if Postgres is connected and running correctly
 async function getPostgresVersion() {
