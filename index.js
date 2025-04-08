@@ -1,26 +1,23 @@
-// const express = require("express");
-// const cors = require("cors");
-// const app = express();
-// const PORT = process.env.PORT || 3000;
-
-// app.use(cors());
-// app.use(express.json());
-
-// app.get("/", (req, res) => {
-//   res.send("Express API is running");
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`Server is running on ${PORT}`);
-// });
-
 const express = require("express");
 const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_URL = process.env.DB_URL;
-app.use(cors());
+const { Pool } = require("pg");
+app.use(cors({ origin: "*" }));
 app.use(express.json()); // This allows parsing of JSON body
+
+const pool = new Pool({
+  connectionString: DB_URL,
+});
+
+pool
+  .connect()
+  .then((client) => {
+    console.log("Connected to the databse");
+    client.release();
+  })
+  .catch((err) => console.error("Database connection error:", err));
 
 // POST: Create a new booking
 app.post("/newbooking", async (req, res) => {
