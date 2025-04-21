@@ -201,8 +201,8 @@ app.delete("/booking/:id", async (req, res) => {
   }
 });
 
-// GET: Get car price by car ID
-app.get("/car/:id/price", async (req, res) => {
+// GET: Get car by car ID
+app.get("/car/:id", async (req, res) => {
   const client = await pool.connect();
   try {
     const carId = req.params.id;
