@@ -209,7 +209,6 @@ app.get("/car/:id", async (req, res) => {
     const query = `
       SELECT make, model, year, price_per_day
       FROM cars
-      WHERE id = $1
     `;
     const result = await client.query(query, [carId]);
 
