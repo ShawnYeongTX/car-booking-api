@@ -202,31 +202,22 @@ app.delete("/booking/:id", async (req, res) => {
 });
 
 // GET: Get car by car ID
-app.get("/car", async (req, res) => {
+app.get("/cars", async (req, res) => {
   const client = await pool.connect();
   try {
-    const carId = req.params.id;
     const query = `
       SELECT make, model, year, price_per_day
       FROM cars
     `;
-    const result = await client.query(query, [carId]);
+    const result = await client.query(query);
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Car not found" });
+      return res.status(404).json({ message: "No cars found" });
     }
-
-    const carData = result.rows[0];
 
     res.status(200).json({
       status: "success",
-      data: {
-        carId,
-        make: carData.make,
-        model: carData.model,
-        year: carData.year,
-        price_per_day: carData.price_per_day,
-      },
+      data: result.rows,
       message: "Car details fetched successfully",
     });
   } catch (error) {
