@@ -202,7 +202,7 @@ app.delete("/booking/:id", async (req, res) => {
 });
 
 // GET: Get car by car ID
-app.get("/car", async (req, res) => {
+app.get("/car/:id", async (req, res) => {
   const client = await pool.connect();
   try {
     const carId = req.params.id;
