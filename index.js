@@ -201,6 +201,38 @@ app.delete("/booking/:id", async (req, res) => {
   }
 });
 
+
+// GET: Get car price by car ID
+app.get("/car/:id/price", async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const carId = req.params.id;
+    const query = `
+      SELECT price_per_day
+      FROM cars
+      WHERE id = $1
+    `;
+    const result = await client.query(query, [carId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Car not found" });
+    }
+
+    const carPrice = result.rows[0].price_per_day; // Assuming the column name is price_per_day
+
+    res.status(200).json({
+      status: "success",
+      data: { carId, price_per_day: carPrice },
+      message: "Car price fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error: ", error.message);
+    res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
 // Serve the home page (index.html)
 app.get("/", (req, res) => {
   res.send("Express API is now running");
