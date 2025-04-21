@@ -207,7 +207,7 @@ app.get("/car/:id/price", async (req, res) => {
   try {
     const carId = req.params.id;
     const query = `
-      SELECT price_per_day
+      SELECT make, model, year, price_per_day
       FROM cars
       WHERE id = $1
     `;
@@ -217,12 +217,18 @@ app.get("/car/:id/price", async (req, res) => {
       return res.status(404).json({ message: "Car not found" });
     }
 
-    const carPrice = result.rows[0].price_per_day; // Assuming the column name is price_per_day
+    const carData = result.rows[0];
 
     res.status(200).json({
       status: "success",
-      data: { carId, price_per_day: carPrice },
-      message: "Car price fetched successfully",
+      data: {
+        carId,
+        make: carData.make,
+        model: carData.model,
+        year: carData.year,
+        price_per_day: carData.price_per_day,
+      },
+      message: "Car details fetched successfully",
     });
   } catch (error) {
     console.error("Error: ", error.message);
@@ -231,6 +237,7 @@ app.get("/car/:id/price", async (req, res) => {
     client.release();
   }
 });
+
 // Serve the home page (index.html)
 app.get("/", (req, res) => {
   res.send("Express API is now running");
