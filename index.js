@@ -152,9 +152,9 @@ app.put("/booking/:id", async (req, res) => {
     // Update the booking
     const query = `
     UPDATE bookings
-    SET start_date = $1, end_date = $2, name = $3, contact = $4
-    WHERE id = $5
-    RETURNING id, start_date, end_date, name, contact
+    SET start_date = $1, end_date = $2, name = $3, contact = $4, total_price = $5
+    WHERE id = $6
+    RETURNING id, start_date, end_date, name, contact, total_price
   `;
     const params = [start_date, end_date, name, contact, bookingId];
 
