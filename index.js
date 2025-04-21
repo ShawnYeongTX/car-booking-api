@@ -152,18 +152,11 @@ app.put("/booking/:id", async (req, res) => {
     // Update the booking
     const query = `
     UPDATE bookings
-    SET start_date = $1, end_date = $2, total_price = $3, name = $4, contact = $5
-    WHERE id = $6
-    RETURNING id, start_date, end_date, total_price, name, contact
+    SET start_date = $1, end_date = $2, name = $3, contact = $4
+    WHERE id = $5
+    RETURNING id, start_date, end_date, name, contact
   `;
-    const params = [
-      start_date,
-      end_date,
-      total_price,
-      name,
-      contact,
-      bookingId,
-    ];
+    const params = [start_date, end_date, name, contact, bookingId];
 
     const result = await client.query(query, params);
 
@@ -238,7 +231,6 @@ app.get("/car/:id/price", async (req, res) => {
     client.release();
   }
 });
-
 // Serve the home page (index.html)
 app.get("/", (req, res) => {
   res.send("Express API is now running");
