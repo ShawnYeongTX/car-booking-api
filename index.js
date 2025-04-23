@@ -206,7 +206,7 @@ app.get("/cars", async (req, res) => {
   const client = await pool.connect();
   try {
     const query = `
-      SELECT make, model, year, price_per_day
+      SELECT id, make, model, year, price_per_day
       FROM cars
     `;
     const result = await client.query(query);
