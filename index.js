@@ -139,7 +139,7 @@ app.put("/booking/:id", async (req, res) => {
   const client = await pool.connect();
   try {
     const bookingId = req.params.id;
-    const { start_date, end_date, name, contact } = req.body;
+    const { start_date, end_date, total_price, name, contact } = req.body;
 
     // Check if the booking exists
     const checkQuery = "SELECT * FROM bookings WHERE id = $1";
