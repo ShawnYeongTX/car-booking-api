@@ -235,6 +235,30 @@ app.get("/cars", async (req, res) => {
   }
 });
 
+// POST endpoint to receive inquiry
+app.post("/inquiry", async (req, res) => {
+  const { name, email, contact, message } = req.body;
+
+  try {
+    const query = `
+      INSERT INTO inquiries (name, email, contact, message)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *;
+    `;
+    const values = [name, email, contact, message];
+
+    const result = await pool.query(query, values);
+
+    res.status(201).json({
+      message: "Inquiry received successfully.",
+      inquiry: result.rows[0],
+    });
+  } catch (err) {
+    console.error("Error inserting inquiry:", err);
+    res.status(500).json({ error: "Failed to submit inquiry." });
+  }
+});
+
 // Serve the home page (index.html)
 app.get("/", (req, res) => {
   res.send("Express API is now running");
